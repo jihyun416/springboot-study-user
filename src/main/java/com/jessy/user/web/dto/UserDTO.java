@@ -1,4 +1,4 @@
-package com.jessy.user.web.rest.dto;
+package com.jessy.user.web.dto;
 
 import lombok.*;
 

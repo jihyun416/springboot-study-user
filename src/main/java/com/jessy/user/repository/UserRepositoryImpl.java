@@ -1,6 +1,6 @@
 package com.jessy.user.repository;
 
-import com.jessy.user.web.rest.dto.UserDTO;
+import com.jessy.user.web.dto.UserDTO;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;

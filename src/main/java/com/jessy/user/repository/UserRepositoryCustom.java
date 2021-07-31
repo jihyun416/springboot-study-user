@@ -1,6 +1,6 @@
 package com.jessy.user.repository;
 
-import com.jessy.user.web.rest.dto.UserDTO;
+import com.jessy.user.web.dto.UserDTO;
 
 import java.util.List;
 

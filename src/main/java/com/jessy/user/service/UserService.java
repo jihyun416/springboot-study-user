@@ -3,7 +3,7 @@ package com.jessy.user.service;
 import com.jessy.user.domain.User;
 import com.jessy.user.repository.UserQuerydslRepository;
 import com.jessy.user.repository.UserRepository;
-import com.jessy.user.web.rest.dto.UserDTO;
+import com.jessy.user.web.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

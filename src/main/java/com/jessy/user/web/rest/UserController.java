@@ -2,7 +2,7 @@ package com.jessy.user.web.rest;
 
 import com.jessy.user.domain.User;
 import com.jessy.user.service.UserService;
-import com.jessy.user.web.rest.dto.UserDTO;
+import com.jessy.user.web.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
