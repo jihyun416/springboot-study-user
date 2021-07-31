@@ -1,2 +1,16 @@
 server:
   port: 9000
+
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: [url]
+    username: [username]
+    password: [password]
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: 'update'
+      use-new-id-generator-mappings: false
