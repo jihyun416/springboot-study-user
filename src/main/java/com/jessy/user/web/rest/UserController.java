@@ -55,10 +55,9 @@ public class UserController {
         return this.convertToDto(userService.updateUser(userSeq, this.convertToEntity(userDTO)));
     }
 
-    @Operation(summary  = "사용자 삭제", description = "사용자를 삭제한다.")
+    @Operation(hidden = true)
     @DeleteMapping("{userSeq}")
-    public ResponseDTO deleteUser(@Parameter(description = "사용자 일련번호", required = true)
-                                  @PathVariable("userSeq") Long userSeq) {
+    public ResponseDTO deleteUser(@PathVariable("userSeq") Long userSeq) {
         return userService.deleteUser(userSeq);
     }
 
