@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
 @Slf4j
+@EnableWebMvc
 @RestControllerAdvice
 public class ExceptionAdvice {
     @ExceptionHandler(value={AccessDeniedException.class, AuthenticationEntryPointException.class})
