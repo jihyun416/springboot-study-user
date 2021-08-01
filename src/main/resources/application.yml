@@ -16,3 +16,9 @@ spring:
     hibernate:
       ddl-auto: 'update'
       use-new-id-generator-mappings: false
+
+springdoc:
+  version: 0.0.1
+  swagger-ui:
+    path: /swagger
+    operations-sorter: method

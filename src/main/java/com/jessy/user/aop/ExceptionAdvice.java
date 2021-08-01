@@ -2,6 +2,7 @@ package com.jessy.user.aop;
 
 import com.jessy.user.exception.AccessDeniedException;
 import com.jessy.user.exception.AuthenticationEntryPointException;
+import com.jessy.user.exception.NoAuthenticationException;
 import com.jessy.user.web.dto.ResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,18 @@ import java.io.StringWriter;
 @EnableWebMvc
 @RestControllerAdvice
 public class ExceptionAdvice {
+    @ExceptionHandler(NoAuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseDTO NoAuthenticationExceptionException(NoAuthenticationException e) {
+        ResponseDTO responseDTO = ResponseDTO.builder()
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .result(false)
+                .message(e.getClass().getName())
+                .data(e.getMessage())
+                .build();
+        return responseDTO;
+    }
+
     @ExceptionHandler(value={AccessDeniedException.class, AuthenticationEntryPointException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseDTO AuthenticationEntryPointException(AccessDeniedException e) {
