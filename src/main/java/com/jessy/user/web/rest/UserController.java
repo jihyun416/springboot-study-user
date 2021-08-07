@@ -47,6 +47,13 @@ public class UserController {
         return this.convertToDto(userService.createUser(this.convertToEntity(userDTO)));
     }
 
+    @Operation(summary  = "실패 테스트", description = "읽기 전용으로 서비스 호출 후 쓰기가 필요한 서비스를 호출해본다.<br>실패하는 것이 정상이다.")
+    @PostMapping("/test")
+    public UserDTO failTest(@RequestBody UserDTO userDTO) {
+        userService.findUserList(userDTO);
+        return this.convertToDto(userService.createUser(this.convertToEntity(userDTO)));
+    }
+
     @Operation(summary  = "사용자 수정", description = "사용자를 수정한다.")
     @PutMapping("{userSeq}")
     public UserDTO updateUser(@Parameter(description = "사용자 일련번호", required = true)

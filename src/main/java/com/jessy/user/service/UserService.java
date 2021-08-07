@@ -9,6 +9,7 @@ import com.jessy.user.web.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,29 +19,34 @@ public class UserService {
     public final UserRepository userRepository;
     public final UserQuerydslRepository userQuerydslRepository;
 
-
+    @Transactional(readOnly = true)
     public User findUser(String userId) {
         return userRepository.findByUserId(userId).orElse(null);
     }
 
+    @Transactional(readOnly = true)
     public List<UserDTO> findUserList(UserDTO userDTO) {
         return userRepository.findUserList(userDTO);
     }
 
+    @Transactional(readOnly = true)
     public List<UserDTO> findUserList2(UserDTO userDTO) {
         return userQuerydslRepository.findUserList(userDTO);
     }
 
+    @Transactional
     public User createUser(User user) {
         user.setUserSeq(null);
         return userRepository.save(user);
     }
 
+    @Transactional
     public User updateUser(Long userSeq, User user) {
         user.setUserSeq(userSeq);
         return userRepository.save(user);
     }
 
+    @Transactional
     public ResponseDTO deleteUser(Long userSeq) {
         User user = userRepository.findById(userSeq).orElseThrow(()->new NoDataException("No Data. userSeq:"+userSeq));
         userRepository.delete(user);

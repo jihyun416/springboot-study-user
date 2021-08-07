@@ -4,11 +4,6 @@ server:
 spring:
   mvc:
     throw-exception-if-no-handler-found: true
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: [url]
-    username: [username]
-    password: [password]
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -18,7 +13,16 @@ spring:
       use-new-id-generator-mappings: false
 
 springdoc:
-  version: 0.0.1
   swagger-ui:
     path: /swagger
     operations-sorter: method
+
+datasource:
+  master:
+    jdbc-url: [your jdbc-url]
+    username: [your username]
+    password: [your password]
+  slave:
+    jdbc-url: [your jdbc-url]
+    username: [your username]
+    password: [your password]
