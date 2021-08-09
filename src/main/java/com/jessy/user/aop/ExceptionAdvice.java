@@ -20,7 +20,7 @@ import java.io.StringWriter;
 @EnableWebMvc
 @RestControllerAdvice
 public class ExceptionAdvice {
-    @ExceptionHandler(value={NoAuthenticationException.class, InvalidAccessTokenException.class, InvalidRefreshTokenException.class, ExpiredJwtException.class, MalformedJwtException.class, SignatureException.class})
+    @ExceptionHandler(value={InvalidAccessTokenException.class, InvalidRefreshTokenException.class, ExpiredJwtException.class, MalformedJwtException.class, SignatureException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseDTO NoAuthenticationExceptionException(Exception e) {
         ResponseDTO responseDTO = ResponseDTO.builder()
