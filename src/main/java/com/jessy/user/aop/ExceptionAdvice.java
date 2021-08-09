@@ -1,9 +1,10 @@
 package com.jessy.user.aop;
 
-import com.jessy.user.exception.AccessDeniedException;
-import com.jessy.user.exception.AuthenticationEntryPointException;
-import com.jessy.user.exception.NoAuthenticationException;
+import com.jessy.user.exception.*;
 import com.jessy.user.web.dto.ResponseDTO;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,9 +20,9 @@ import java.io.StringWriter;
 @EnableWebMvc
 @RestControllerAdvice
 public class ExceptionAdvice {
-    @ExceptionHandler(NoAuthenticationException.class)
+    @ExceptionHandler(value={NoAuthenticationException.class, InvalidAccessTokenException.class, InvalidRefreshTokenException.class, ExpiredJwtException.class, MalformedJwtException.class, SignatureException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseDTO NoAuthenticationExceptionException(NoAuthenticationException e) {
+    public ResponseDTO NoAuthenticationExceptionException(Exception e) {
         ResponseDTO responseDTO = ResponseDTO.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .result(false)

@@ -18,7 +18,6 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     public List<UserDTO> findUserList(UserDTO userDTO) {
         return queryFactory
                 .select(Projections.bean(UserDTO.class,
-                        user.userSeq,
                         user.userId,
                         user.userName))
                 .from(user)

@@ -1,16 +1,29 @@
 package com.jessy.user.config;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+
+import java.util.Arrays;
 
 @Configuration
 public class SwaggerConfig {
     @Bean
     public OpenAPI userAPI() {
+        SecurityScheme securityScheme = new SecurityScheme()
+                .type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")
+                .in(SecurityScheme.In.HEADER).name(HttpHeaders.AUTHORIZATION);
+        SecurityRequirement schemaRequirement = new SecurityRequirement().addList("bearerAuth");
         return new OpenAPI()
-                .info(new Info().title("User API")
+                .components(new Components().addSecuritySchemes("bearerAuth", securityScheme))
+                .security(Arrays.asList(schemaRequirement))
+                .info(new Info()
+                        .title("User API")
                         .description("User application")
                         .version("v1"));
     }

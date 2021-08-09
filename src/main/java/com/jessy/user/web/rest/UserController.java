@@ -12,7 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@Tag(name = "User")
+@Tag(name="02. User", description = "사용자")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
@@ -56,10 +56,10 @@ public class UserController {
 
     @Operation(summary  = "사용자 수정", description = "사용자를 수정한다.")
     @PutMapping("{userSeq}")
-    public UserDTO updateUser(@Parameter(description = "사용자 일련번호", required = true)
-                                  @PathVariable("userSeq") Long userSeq,
+    public UserDTO updateUser(@Parameter(description = "사용자 아이디", required = true)
+                                  @PathVariable("userId") String userId,
                               @RequestBody UserDTO userDTO) {
-        return this.convertToDto(userService.updateUser(userSeq, this.convertToEntity(userDTO)));
+        return this.convertToDto(userService.updateUser(userId, this.convertToEntity(userDTO)));
     }
 
     @Operation(hidden = true)

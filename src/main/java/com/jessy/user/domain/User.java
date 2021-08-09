@@ -2,6 +2,9 @@ package com.jessy.user.domain;
 
 import lombok.*;
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -12,9 +15,24 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long userSeq;
     private String userId;
     private String userName;
     private String password;
+    private String email;
+    private String phoneNumber;
+    @Builder.Default
+    private Integer attemptCount = 0;
+    private String lastPassword;
+    private LocalDateTime lastLoginDatetime;
+    @Builder.Default
+    private LocalDateTime passwordChangeDatetime = LocalDateTime.now();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "user", fetch= FetchType.LAZY, cascade= CascadeType.REMOVE, orphanRemoval = true)
+    private List<UserAuthority> authorities = new ArrayList<>();
+
+    public static User fromUserId(String userId) {
+        if(userId==null) return null;
+        else return User.builder().userId(userId).build();
+    }
 }

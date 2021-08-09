@@ -21,7 +21,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public User findUser(String userId) {
-        return userRepository.findByUserId(userId).orElse(null);
+        return userRepository.findByUserIdEquals(userId).orElse(null);
     }
 
     @Transactional(readOnly = true)
@@ -36,13 +36,12 @@ public class UserService {
 
     @Transactional
     public User createUser(User user) {
-        user.setUserSeq(null);
         return userRepository.save(user);
     }
 
     @Transactional
-    public User updateUser(Long userSeq, User user) {
-        user.setUserSeq(userSeq);
+    public User updateUser(String userId, User user) {
+        user.setUserId(userId);
         return userRepository.save(user);
     }
 

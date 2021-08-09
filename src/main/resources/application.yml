@@ -15,14 +15,26 @@ spring:
 springdoc:
   swagger-ui:
     path: /swagger
-    operations-sorter: method
+    operations-sorter: alpha
+    tags-sorter: alpha
 
 datasource:
   master:
     jdbc-url: [your jdbc-url]
     username: [your username]
     password: [your password]
+    maximum-pool-size: [your maximum-pool-size]
   slave:
-    jdbc-url: [your jdbc-url]
-    username: [your username]
-    password: [your password]
+    jdbc-url: [ your jdbc-url ]
+    username: [ your username ]
+    password: [ your password ]
+    maximum-pool-size: [ your maximum-pool-size ]
+
+jwt:
+  secret: [your token secret]
+  access:
+    name: access
+    valid: 3600000 #1hour
+  refresh:
+    name: refresh
+    valid: 2592000000 #30days
