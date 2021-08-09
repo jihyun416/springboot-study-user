@@ -32,7 +32,7 @@ public class ExceptionAdvice {
         return responseDTO;
     }
 
-    @ExceptionHandler(value={AccessDeniedException.class, AuthenticationEntryPointException.class})
+    @ExceptionHandler(value={AccessDeniedException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseDTO AuthenticationEntryPointException(AccessDeniedException e) {
         ResponseDTO responseDTO = ResponseDTO.builder()

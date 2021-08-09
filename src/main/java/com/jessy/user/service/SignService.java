@@ -1,6 +1,5 @@
 package com.jessy.user.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jessy.user.domain.Authority;
 import com.jessy.user.domain.User;
 import com.jessy.user.domain.UserAuthority;
@@ -17,13 +16,11 @@ import com.jessy.user.web.dto.SignUpDTO;
 import com.jessy.user.web.dto.TokenDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
