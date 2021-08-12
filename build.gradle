@@ -26,20 +26,18 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-ui:1.5.7'
     implementation 'org.modelmapper:modelmapper:2.3.5'
     implementation 'commons-codec:commons-codec:1.9'
+    implementation 'com.querydsl:querydsl-jpa'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     compileOnly 'org.projectlombok:lombok'
-    compileOnly 'com.querydsl:querydsl-jpa'
-    compileOnly 'com.querydsl:querydsl-apt'
-    compileOnly 'com.querydsl:querydsl-core'
 
+    annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'com.querydsl:querydsl-apt:4.2.1:jpa'
     annotationProcessor "jakarta.persistence:jakarta.persistence-api:2.2.3"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api:1.3.5"
-    annotationProcessor 'org.projectlombok:lombok'
 }
 
 def querydslSrcDir = 'src/main/generated'
