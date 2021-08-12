@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table
-public class UserAuthority {
+public class UserAuthority extends BaseEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long userAuthoritySeq;

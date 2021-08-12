@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table
-public class Authority {
+public class Authority extends BaseEntity {
     @Id
     private String authorityId;
     private String authorityName;
