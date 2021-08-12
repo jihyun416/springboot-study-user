@@ -27,6 +27,7 @@ dependencies {
     implementation 'org.modelmapper:modelmapper:2.3.5'
     implementation 'commons-codec:commons-codec:1.9'
     implementation 'com.querydsl:querydsl-jpa'
+    implementation 'org.springframework.data:spring-data-envers:2.5.3'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 

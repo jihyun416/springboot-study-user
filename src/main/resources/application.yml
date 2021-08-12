@@ -11,6 +11,13 @@ spring:
     hibernate:
       ddl-auto: 'update'
       use-new-id-generator-mappings: false
+    properties:
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: _history
+            revision_field_name: rev
+            store_data_at_delete: true
 
 springdoc:
   swagger-ui:

@@ -3,6 +3,7 @@ package com.jessy.user.web.rest;
 import com.jessy.user.service.UserService;
 import com.jessy.user.web.dto.ResponseDTO;
 import com.jessy.user.web.dto.UserDTO;
+import com.jessy.user.web.dto.UserRevisionDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -61,10 +62,13 @@ public class UserController {
         return userService.updateUser(userId, userDTO.toEntity()).toDTO();
     }
 
-    @Operation(hidden = true)
     @DeleteMapping("{userId}")
     public ResponseDTO deleteUser(@PathVariable("userId") String userId) {
         return userService.deleteUser(userId);
     }
 
+    @GetMapping("/revision/{userId}")
+    public List<UserRevisionDTO> findUserRevisionList(@PathVariable("userId") String userId) {
+        return userService.findUserRevisionList(userId);
+    }
 }

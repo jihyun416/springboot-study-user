@@ -4,9 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jessy.user.util.CollectionUtil;
 import com.jessy.user.web.dto.UserAuthorityDTO;
 import lombok.*;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
+
+@Audited
+@AuditOverride(forClass=BaseEntity.class)
 @Builder
 @Getter
 @Setter
@@ -19,11 +25,13 @@ public class UserAuthority extends BaseEntity {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long userAuthoritySeq;
 
+    @Audited(targetAuditMode = NOT_AUDITED)
     @ManyToOne
     @JoinColumn(name="user_id")
     @JsonIgnore
     private User user;
 
+    @Audited(targetAuditMode = NOT_AUDITED)
     @ManyToOne
     @JoinColumn(name="authority_id")
     @JsonIgnore

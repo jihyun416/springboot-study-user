@@ -6,12 +6,16 @@ import com.jessy.user.repository.UserQuerydslRepository;
 import com.jessy.user.repository.UserRepository;
 import com.jessy.user.web.dto.ResponseDTO;
 import com.jessy.user.web.dto.UserDTO;
+import com.jessy.user.web.dto.UserRevisionDTO;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.history.Revisions;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -50,5 +54,16 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(()->new NoDataException("No Data. userId:"+userId));
         userRepository.delete(user);
         return ResponseDTO.builder().result(true).status(HttpStatus.OK.value()).message("Deleted successfully!").build();
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserRevisionDTO> findUserRevisionList(String userId) {
+        Revisions<Long, User> revisions = userRepository.findRevisions(userId);
+        return revisions.stream().map(rev -> {
+            ModelMapper modelMapper = new ModelMapper();
+            UserRevisionDTO dto = modelMapper.map(rev.getEntity(), UserRevisionDTO.class);
+            dto.setRevType(rev.getMetadata().getRevisionType().name());
+            return dto;
+        }).collect(Collectors.toList());
     }
 }

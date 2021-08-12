@@ -2,6 +2,9 @@ package com.jessy.user.domain;
 
 import com.jessy.user.web.dto.UserDTO;
 import lombok.*;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
@@ -9,6 +12,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Audited
+@AuditOverride(forClass=BaseEntity.class)
 @Entity
 @Table
 @Builder
@@ -30,6 +35,7 @@ public class User extends BaseEntity {
     @Builder.Default
     private LocalDateTime passwordChangeDatetime = LocalDateTime.now();
 
+    @NotAudited
     @Builder.Default
     @OneToMany(mappedBy = "user", fetch= FetchType.LAZY, cascade= CascadeType.REMOVE, orphanRemoval = true)
     private List<UserAuthority> authorities = new ArrayList<>();

@@ -31,11 +31,9 @@ public class BaseEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     protected LocalDateTime inputDatetime;
 
-    @Column(insertable = false)
     @LastModifiedBy
     protected String editId;
 
-    @Column(insertable = false)
     @UpdateTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     protected LocalDateTime editDatetime;
