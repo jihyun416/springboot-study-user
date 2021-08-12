@@ -1,6 +1,5 @@
 package com.jessy.user.web.rest;
 
-import com.jessy.user.domain.User;
 import com.jessy.user.service.UserService;
 import com.jessy.user.web.dto.ResponseDTO;
 import com.jessy.user.web.dto.UserDTO;
@@ -24,7 +23,7 @@ public class UserController {
     @GetMapping("/{userId}")
     public UserDTO findUser(@Parameter(description = "사용자 아이디", required = true)
                              @PathVariable("userId") String userId) {
-         UserDTO dto = this.convertToDto(userService.findUser(userId));
+         UserDTO dto = userService.findUser(userId).toDTO();
          dto.setPassword(null);
          return dto;
     }
@@ -44,40 +43,28 @@ public class UserController {
     @Operation(summary  = "사용자 생성", description = "사용자를 신규 등록한다.")
     @PostMapping
     public UserDTO createUser(@RequestBody UserDTO userDTO) {
-        return this.convertToDto(userService.createUser(this.convertToEntity(userDTO)));
+        return userService.createUser(userDTO.toEntity()).toDTO();
     }
 
     @Operation(summary  = "실패 테스트", description = "읽기 전용으로 서비스 호출 후 쓰기가 필요한 서비스를 호출해본다.<br>실패하는 것이 정상이다.")
     @PostMapping("/test")
     public UserDTO failTest(@RequestBody UserDTO userDTO) {
         userService.findUserList(userDTO);
-        return this.convertToDto(userService.createUser(this.convertToEntity(userDTO)));
+        return userService.createUser(userDTO.toEntity()).toDTO();
     }
 
     @Operation(summary  = "사용자 수정", description = "사용자를 수정한다.")
-    @PutMapping("{userSeq}")
+    @PutMapping("{userId}")
     public UserDTO updateUser(@Parameter(description = "사용자 아이디", required = true)
                                   @PathVariable("userId") String userId,
                               @RequestBody UserDTO userDTO) {
-        return this.convertToDto(userService.updateUser(userId, this.convertToEntity(userDTO)));
+        return userService.updateUser(userId, userDTO.toEntity()).toDTO();
     }
 
     @Operation(hidden = true)
-    @DeleteMapping("{userSeq}")
-    public ResponseDTO deleteUser(@PathVariable("userSeq") Long userSeq) {
-        return userService.deleteUser(userSeq);
+    @DeleteMapping("{userId}")
+    public ResponseDTO deleteUser(@PathVariable("userId") String userId) {
+        return userService.deleteUser(userId);
     }
 
-    // DTO 변환
-    private UserDTO convertToDto(User user) {
-        UserDTO dto = modelMapper.map(user, UserDTO.class);
-        dto.setPassword(null);
-        return dto;
-    }
-
-    // Entity 변환
-    private User convertToEntity(UserDTO userDTO) {
-        User user = modelMapper.map(userDTO, User.class);
-        return user;
-    }
 }

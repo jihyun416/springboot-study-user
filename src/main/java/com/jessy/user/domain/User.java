@@ -1,6 +1,9 @@
 package com.jessy.user.domain;
 
+import com.jessy.user.web.dto.UserDTO;
 import lombok.*;
+import org.modelmapper.ModelMapper;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,5 +37,12 @@ public class User {
     public static User fromUserId(String userId) {
         if(userId==null) return null;
         else return User.builder().userId(userId).build();
+    }
+
+    public UserDTO toDTO() {
+        ModelMapper modelMapper = new ModelMapper();
+        UserDTO userDTO = modelMapper.map(this, UserDTO.class);
+        userDTO.setPassword(null);
+        return userDTO;
     }
 }

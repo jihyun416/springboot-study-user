@@ -46,8 +46,8 @@ public class UserService {
     }
 
     @Transactional
-    public ResponseDTO deleteUser(Long userSeq) {
-        User user = userRepository.findById(userSeq).orElseThrow(()->new NoDataException("No Data. userSeq:"+userSeq));
+    public ResponseDTO deleteUser(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(()->new NoDataException("No Data. userId:"+userId));
         userRepository.delete(user);
         return ResponseDTO.builder().result(true).status(HttpStatus.OK.value()).message("Deleted successfully!").build();
     }
