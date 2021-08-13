@@ -1,10 +1,15 @@
 package com.jessy.user.service;
 
+import com.jessy.user.domain.Authority;
 import com.jessy.user.domain.User;
+import com.jessy.user.domain.UserAuthority;
 import com.jessy.user.exception.NoDataException;
+import com.jessy.user.repository.UserAuthorityRepository;
 import com.jessy.user.repository.UserQuerydslRepository;
 import com.jessy.user.repository.UserRepository;
+import com.jessy.user.util.CollectionUtil;
 import com.jessy.user.web.dto.ResponseDTO;
+import com.jessy.user.web.dto.UserAuthoritySetDTO;
 import com.jessy.user.web.dto.UserDTO;
 import com.jessy.user.web.dto.UserRevisionDTO;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +27,7 @@ import java.util.stream.Collectors;
 public class UserService {
     public final UserRepository userRepository;
     public final UserQuerydslRepository userQuerydslRepository;
+    public final UserAuthorityRepository userAuthorityRepository;
 
     @Transactional(readOnly = true)
     public User findUser(String userId) {
@@ -65,5 +71,20 @@ public class UserService {
             dto.setRevType(rev.getMetadata().getRevisionType().name());
             return dto;
         }).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public ResponseDTO saveUserAuthorites(String userId, UserAuthoritySetDTO setDTO) {
+        if(!CollectionUtil.isEmpty(setDTO.getAdd())) {
+            List<UserAuthoritySetDTO.UserAuthorityDTOForAdd> add = setDTO.getAdd();
+            List<UserAuthority> addUserAuth = add.stream().map(addItem-> UserAuthority.builder().authority(Authority.fromAuthorityId(addItem.getAuthorityId())).user(User.fromUserId(userId)).build()).collect(Collectors.toList());
+            userAuthorityRepository.saveAll(addUserAuth);
+        }
+        if(!CollectionUtil.isEmpty(setDTO.getDelete())) {
+            List<UserAuthoritySetDTO.UserAuthorityDTOForDelete> delete = setDTO.getDelete();
+            List<UserAuthority> deleteUserAuth = delete.stream().map(deleteItem-> UserAuthority.fromUserAuthoritySeq(deleteItem.getUserAuthoritySeq())).collect(Collectors.toList());
+            userAuthorityRepository.deleteAll(deleteUserAuth);
+        }
+        return ResponseDTO.builder().result(true).status(HttpStatus.OK.value()).message("Saved successfully!").build();
     }
 }

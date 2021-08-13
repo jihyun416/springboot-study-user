@@ -6,10 +6,9 @@ import com.jessy.user.web.dto.UserAuthorityDTO;
 import lombok.*;
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
-
-import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
 
 @Audited
 @AuditOverride(forClass=BaseEntity.class)
@@ -25,17 +24,22 @@ public class UserAuthority extends BaseEntity {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long userAuthoritySeq;
 
-    @Audited(targetAuditMode = NOT_AUDITED)
+    @NotAudited
     @ManyToOne
     @JoinColumn(name="user_id")
     @JsonIgnore
     private User user;
 
-    @Audited(targetAuditMode = NOT_AUDITED)
+    @NotAudited
     @ManyToOne
     @JoinColumn(name="authority_id")
     @JsonIgnore
     private Authority authority;
+
+    public static UserAuthority fromUserAuthoritySeq(Long userAuthoritySeq) {
+        if(!CollectionUtil.isEmpty(userAuthoritySeq)) return null;
+        return UserAuthority.builder().userAuthoritySeq(userAuthoritySeq).build();
+    }
 
     public UserAuthorityDTO toDTO() {
         UserAuthorityDTO dto = new UserAuthorityDTO();
