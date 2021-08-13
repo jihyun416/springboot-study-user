@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
+import org.hibernate.envers.RelationTargetAuditMode;
 
 import javax.persistence.*;
 
@@ -24,13 +25,13 @@ public class UserAuthority extends BaseEntity {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long userAuthoritySeq;
 
-    @NotAudited
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     @ManyToOne
     @JoinColumn(name="user_id")
     @JsonIgnore
     private User user;
 
-    @NotAudited
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     @ManyToOne
     @JoinColumn(name="authority_id")
     @JsonIgnore
