@@ -27,18 +27,20 @@ springdoc:
 
 datasource:
   master:
-    jdbc-url: [your jdbc-url]
-    username: [your username]
-    password: [your password]
-    maximum-pool-size: [your maximum-pool-size]
+    jdbc-url: jdbc:mysql://localhost:3306/jessy
+    username: root
+    password: 1234
+    connection-test-query: SELECT 1
+    maximum-pool-size: 4
   slave:
-    jdbc-url: [ your jdbc-url ]
-    username: [ your username ]
-    password: [ your password ]
-    maximum-pool-size: [ your maximum-pool-size ]
+    jdbc-url: jdbc:mysql://localhost:3306/jessy
+    username: root
+    password: 1234
+    connection-test-query: SELECT 2
+    maximum-pool-size: 4
 
 jwt:
-  secret: [your token secret]
+  secret: secret
   access:
     name: access
     valid: 3600000 #1hour

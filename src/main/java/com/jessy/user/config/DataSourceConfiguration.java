@@ -4,7 +4,6 @@ import com.jessy.user.context.DatabaseEnvironment;
 import com.jessy.user.context.MasterSlaveRoutingDataSource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,23 +14,6 @@ import java.util.Map;
 
 @Configuration
 public class DataSourceConfiguration {
-    @Value("${datasource.master.jdbc-url}")
-    private String masterJdbcUrl;
-
-    @Value("${datasource.master.username}")
-    private String masterUsername;
-
-    @Value("${datasource.master.password}")
-    private String masterPassword;
-
-    public DataSource masterDataSource() {
-        HikariDataSource hikariDataSource = new HikariDataSource();
-        hikariDataSource.setJdbcUrl(masterJdbcUrl);
-        hikariDataSource.setUsername(masterUsername);
-        hikariDataSource.setPassword(masterPassword);
-        return hikariDataSource;
-    }
-
     @Bean
     @ConfigurationProperties(prefix = "datasource.master")
     public HikariConfig hikariMasterConfig() {
@@ -39,6 +21,9 @@ public class DataSourceConfiguration {
         return config;
     }
 
+    public DataSource masterDataSource() {
+        return new HikariDataSource(hikariMasterConfig());
+    }
 
 
     @Bean
@@ -48,7 +33,6 @@ public class DataSourceConfiguration {
         return config;
     }
 
-    // Slave Datasource (읽기)
     public DataSource slaveDataSource() {
         return new HikariDataSource(hikariSlaveConfig());
     }
